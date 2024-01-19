@@ -7,7 +7,8 @@ from discord.ext import commands
 from dotenv import load_dotenv
 
 from mod_points_bot_core import ModPointsBot
-from mod_points_db import ModPointsDb
+from mod_points_db_postgres import ModPointsDbPostgres
+from mod_points_db_test import ModPointsDbTest
 
 # Load environment variables
 load_dotenv()
@@ -18,8 +19,9 @@ intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 
-database = ModPointsDb()
-mpb = ModPointsBot()
+database = ModPointsDbPostgres()
+#database = ModPointsDbTest()
+mpb = ModPointsBot(database)
 
 
 @client.event
@@ -71,7 +73,7 @@ async def check_points(ctx: commands.Context, user: discord.Member = None):
     :type ctx: commands.Context
     :param user: The user to check, defaults to None
     :type user: discord.Member, optional
-    """          
+    """
     await mpb.check_points(ctx, user)
 
 @tree.command(
@@ -99,7 +101,7 @@ async def delete_user(ctx: commands.Context, user: discord.Member):
     :type ctx: commands.Context
     :param user: The user to remove from the database
     :type user: discord.Member
-    """  
+    """
     await mbp.delete_user(ctx, user)
 
 client.run(TOKEN)
