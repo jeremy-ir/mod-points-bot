@@ -3,7 +3,7 @@ import psycopg2
 from urllib.parse import urlparse
 from dotenv import load_dotenv
 
-from mod_points_db import ModPointsDb
+from points_db import PointsDb
 
 # Load environment variables
 load_dotenv()
@@ -17,9 +17,9 @@ TABLE_NAME = "points"
 USER_KEY = "user_id"
 POINT_KEY = "user_points"
 
-class ModPointsDbPostgres(ModPointsDb):
+class PointsDbPostgres(PointsDb):
     def __init__(self):
-        # Connect to the mod-points-db
+        # Connect to the points-db
         result = urlparse(DATABASE_URL)
         username = result.username
         password = result.password

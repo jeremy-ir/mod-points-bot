@@ -1,16 +1,16 @@
-#mod_points_bot_core.py
+#points_bot_core.py
 import discord
 from discord.ext import commands
 
-from mod_points_db import ModPointsDb
+from points_db import PointsDb
 
 #Constants
 NON_POSITIVE_INTEGER_STRING = f"The number must be a positive integer"
 INTEGER_TOO_LARGE_STRING = f"The number selected is too large"
 INVALID_USER_STRING = f"You cannot change your own points"
-# String for mod point message. (Ex. @Albert gained 3 mod points)
-SET_MOD_POINT_STRING = f"%s %s %d mod point(s)"
-GET_MOD_POINT_STRING = f"%s has %d mod point(s)"
+# String for point message. (Ex. @Albert gained 3 points)
+SET_POINT_STRING = f"%s %s %d point(s)"
+GET_POINT_STRING = f"%s has %d point(s)"
 DATABASE_DOWN_STRING = f"The database is down. Contact crash2bandicoot."
 DELETE_USER_WARNING_STRING = f"Stop trying to delete users"
 SUCCESSFULLY_DELETED_USER_STRING = f"User removed successfully"
@@ -19,9 +19,9 @@ USER_SCORE_STRING = f"%s %d\n"
 ADD_POINTS = True
 REMOVE_POINTS = False
 
-class ModPointsBot():
+class PointsBot():
 
-    def __init__(self, database: ModPointsDb):
+    def __init__(self, database: PointsDb):
         self.database = database
 
     def modify_points(self, ctx: commands.Context, user: discord.Member, points: int, isGive: bool):
@@ -72,7 +72,7 @@ class ModPointsBot():
                 embed.description = DATABASE_DOWN_STRING
             else:
                 isEphemeral = False
-                embed.description = SET_MOD_POINT_STRING % (user.mention,
+                embed.description = SET_POINT_STRING % (user.mention,
                                                             "gained" if isGive else "lost",
                                                             points)
 
@@ -124,10 +124,10 @@ class ModPointsBot():
             user = ctx.user
 
         points = self.database.getUserPoints(user.id)
-        embed.description = GET_MOD_POINT_STRING % (user.display_name, points)
+        embed.description = GET_POINT_STRING % (user.display_name, points)
         await ctx.response.send_message(embed = embed, ephemeral = True)
 
-    async def mod_leaderboard(self, ctx: commands.Context, is_visible: bool = False):
+    async def leaderboard(self, ctx: commands.Context, is_visible: bool = False):
         """Display the leaderboard of points
 
         :param ctx: Represents the context in which a command is being invoked under
@@ -137,7 +137,7 @@ class ModPointsBot():
         """
         embed = discord.Embed(
             color=discord.Color.blue(),
-            title="Mod Point Leaderboard"
+            title="Point Leaderboard"
         )
         embed.description = ""
         userScores = self.database.getAllUserScores()

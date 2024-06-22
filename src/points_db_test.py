@@ -1,4 +1,4 @@
-from mod_points_db import ModPointsDb
+from points_db import PointsDb
 # Constants
 INT_MIN = -2147483648
 INT_MAX =  2147483647
@@ -7,7 +7,7 @@ TABLE_NAME = "points"
 USER_KEY = "user_id"
 POINT_KEY = "user_points"
 
-class ModPointsDbTest(ModPointsDb):
+class PointsDbTest(PointsDb):
     def __init__(self):
        self.database = {}
 

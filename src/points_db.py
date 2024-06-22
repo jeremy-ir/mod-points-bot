@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class ModPointsDb(ABC):
+class PointsDb(ABC):
 
     @abstractmethod
     def getUserPoints(self, user_id: int):
