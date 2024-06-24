@@ -1,4 +1,4 @@
-from points_db import PointsDb
+from .points_db import PointsDb
 # Constants
 INT_MIN = -2147483648
 INT_MAX =  2147483647
